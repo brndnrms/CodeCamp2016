@@ -2,33 +2,35 @@ defmodule TwitStatTest do
   use ExUnit.Case
 
   test "followers" do
-    ["MachinesAreUs", "metallikito", "silmood"] = 
+    assert ["MachinesAreUs", "metallikito", "silmood"] ==
       TwitStat.followers("tuitabeaver")
   end
 
   test "common followers" do
-    ["MachinesAreUs", "metallikito", "silmood"] = 
+    assert ["MachinesAreUs", "metallikito", "silmood"] ==
       TwitStat.common_followers("tuitabeaver", "hip_beaver")
   end
 
   test "friends" do
-    ["MachinesAreUs", "metallikito", "rugi", "silmood"] = 
+    assert ["MachinesAreUs", "metallikito", "rugi", "silmood"] ==
       TwitStat.friends("hip_beaver")
   end
 
   test "common friends" do
-    ["MachinesAreUs", "metallikito", "silmood"] =
-      TwitStat.common_friends("tuitabeaver", "hip_beaver") 
+    assert ["MachinesAreUs", "metallikito", "silmood"] ==
+      TwitStat.common_friends("tuitabeaver", "hip_beaver")
   end
 
   test "common friends graph" do
-    # g = TwitStat.common_friends_graph("tuitabeaver", "hip_beaver")
+    real_g = TwitStat.common_friends_graph("tuitabeaver", "hip_beaver")
 
-    # %TwitStat.Graph{
-    #   nodes: ["MachinesAreUs", "metallikito", "silmood"], 
-    #   edges: [{"MachinesAreUs", "metallikito"}, 
-    #           {"MachinesAreUs", "silmood"},
-    #           {"metallikito", "silmood"}] } = g
-
+    expected_g = %TwitStat.Graph{
+      nodes: [{14120299, "MachinesAreUs"},
+              {84340970, "metallikito"},
+              {2597177828, "silmood"}],
+      edges: [[14120299, 84340970],
+              [14120299, 2597177828],
+              [84340970, 2597177828]]}
+    assert real_g == expected_g
   end
 end

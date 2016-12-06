@@ -3,17 +3,17 @@ defmodule GraphTest do
   alias TwitStat.Graph
 
   test "add node" do
-    g = 
+    g =
       Graph.new
       |> Graph.add_node("user1")
       |> Graph.add_node("user2")
       |> Graph.add_node("user3")
 
-    %Graph{nodes: ["user1", "user2", "user3"], edges: _ } = g
+    assert %Graph{nodes: ["user1", "user2", "user3"], edges: [] } == g
   end
 
   test "add edge" do
-    g = 
+    g =
       Graph.new
       |> Graph.add_node("user1")
       |> Graph.add_node("user2")
@@ -21,9 +21,7 @@ defmodule GraphTest do
       |> Graph.add_edge("user1", "user2")
       |> Graph.add_edge("user1", "user3")
 
-    %Graph{nodes: ["user1", "user2", "user3"], 
-           edges: [["user1", "user2"], ["user1", "user3"]] } = g
+    assert %Graph{nodes: ["user1", "user2", "user3"],
+                  edges: [["user1", "user2"], ["user1", "user3"]] } == g
   end
-
-
 end
