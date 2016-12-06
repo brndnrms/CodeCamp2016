@@ -14,7 +14,8 @@ defmodule HappyBeavers.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :extwitter]]
+    [applications: [:logger, :extwitter, :cowboy, :plug],
+     mod: {HappyBeavers, []}]
   end
 
   # Dependencies can be Hex packages:
@@ -28,7 +29,9 @@ defmodule HappyBeavers.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [ {:oauth, github: "tim/erlang-oauth"},
-      {:extwitter, "~> 0.6"}
+      {:extwitter, "~> 0.6"},
+      {:cowboy, "~> 1.0.0"},
+      {:plug, "~> 1.0"}
     ]
   end
 end

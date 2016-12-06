@@ -56,7 +56,7 @@ defmodule TwitStat do
   def common_friends_graph(user1, user2) do
     _common_friends(user1, user2)
       |> create_graph
-      |> Graph.save("#{user1}_#{user2}.dot")
+      #|> Graph.save("#{user1}_#{user2}.dot")
   end
 
   def create_graph(users) do
@@ -64,8 +64,10 @@ defmodule TwitStat do
       |> Enum.reduce(Graph.new, &Graph.add_node(&2, &1))
     g = users
       |> Enum.reduce(g, &add_friend_edges(&2, &1))
-
-    %{g | nodes: Enum.zip(g.nodes, to_screen_names(g.nodes))}
+    nodes =
+      Enum.zip(g.nodes, to_screen_names(g.nodes))
+      |> Enum.map(fn {a,b} -> %{id: a, name: b} end)
+    %{g | nodes: nodes}
   end
 
   defp add_friend_edges(graph, user) do
